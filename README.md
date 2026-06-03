@@ -5,7 +5,14 @@ Ollama — no API keys, no internet required, no cost.
 
 ## Demo
 
+### CLI Output
 ![Code Review Output](demo.png)
+
+### API Documentation
+![API Docs](api_demo.png)
+
+### API in Action
+![API Response](api_response.png)
 
 ## How it works
 
@@ -30,7 +37,7 @@ ollama pull llama3.2
 
 ### 2. Clone and install
 ```bash
-git clone https://github.com/YOUR_USERNAME/code-review-agent
+git clone https://github.com/Simrozechawla/code-review-agent
 cd code-review-agent
 python -m venv venv
 venv\Scripts\activate
@@ -54,7 +61,7 @@ python api.py
 ## Tech stack
 
 - **Ollama + LLaMA 3.2** — local LLM inference, no API costs
-- **Python AST** — static code analysis  
+- **Python AST** — static code analysis
 - **FastAPI + Pydantic** — REST API with automatic request validation
 - **Rich** — terminal colour formatting
 
