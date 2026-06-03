@@ -1,48 +1,65 @@
 # LLM Code Review Agent
 
-An AI-powered Python code reviewer built with Claude API and FastAPI.
-Paste any Python file and get a structured review with line numbers,
-severity ratings, and concrete fixes.
+An AI-powered Python code reviewer that runs entirely locally using
+Ollama — no API keys, no internet required, no cost.
+
+## Demo
+
+![Code Review Output](demo.png)
 
 ## How it works
 
-1. Static analyser reads the file using Python's AST module —
-   extracts function names, line numbers, missing docstrings, unused imports
-2. That structured analysis plus the raw code is sent to Claude API
-3. Claude returns a JSON review with per-issue severity and fix suggestions
-4. Results display as a colour-coded table in the terminal
+1. **Static analysis** — Python's AST module extracts function names,
+   line numbers, missing docstrings, and unused imports
+2. **LLM inference** — structured analysis + raw code sent to a local
+   LLaMA model via Ollama
+3. **Structured output** — JSON review with per-issue severity,
+   line numbers, and concrete fixes
+4. **Rich display** — colour-coded terminal table sorted by severity
+5. **REST API** — FastAPI endpoint so any app can consume reviews as JSON
 
 ## Setup
 
+### 1. Install Ollama
+Download from [ollama.com](https://ollama.com) and install.
+
+Then pull the model:
+```bash
+ollama pull llama3.2
+```
+
+### 2. Clone and install
 ```bash
 git clone https://github.com/YOUR_USERNAME/code-review-agent
 cd code-review-agent
 python -m venv venv
-venv\Scripts\activate        # Windows
+venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-Create a `.env` file with your Anthropic API key:
-ANTHROPIC_API_KEY=sk-ant-your-key-here
+### 3. Run
 
-## Usage
-
-### CLI
+**CLI:**
 ```bash
 python reviewer.py path/to/your_file.py
 python reviewer.py path/to/your_file.py --save output.json
 ```
 
-### API
+**API:**
 ```bash
 python api.py
+# Open http://localhost:8000/docs
 ```
-Then open `http://localhost:8000/docs` to test in browser.
 
 ## Tech stack
 
-- Claude API (Anthropic) — LLM inference
-- Python AST module — static code analysis
-- FastAPI — REST API layer
-- Rich — terminal formatting
-- Pydantic — request validation
+- **Ollama + LLaMA 3.2** — local LLM inference, no API costs
+- **Python AST** — static code analysis  
+- **FastAPI + Pydantic** — REST API with automatic request validation
+- **Rich** — terminal colour formatting
+
+## Why local inference?
+
+Running the model locally means zero API costs, no rate limits,
+and no code ever leaves your machine — important for reviewing
+proprietary or sensitive codebases.
